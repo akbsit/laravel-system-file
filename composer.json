@@ -1,0 +1,29 @@
+{
+    "name": "falbar/laravel-system-file",
+    "description": "Uploading files to the server.",
+    "keywords": [
+        "laravel",
+        "media",
+        "files",
+        "images",
+        "downloads",
+        "cms",
+        "upload"
+    ],
+    "homepage": "http://falbar.ru/",
+    "license": "MIT",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Falbar\\SystemFile\\": "src"
+        }
+    },
+    "require": {
+        "php": "^7.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": "Falbar\\SystemFile\\Providers\\MediaServiceProvider"
+        }
+    }
+}
