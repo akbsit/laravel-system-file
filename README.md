@@ -51,7 +51,7 @@ $oSystemFile = User::first()->getMediaFirst();
 $oSystemFileList = User::first()->getMedia();
 ```
 
-## Список методов/свойств
+## Список методов и свойств
 
 * `media` - список файлов прикрепленных к модели;
 * `addMedia($file)` - прикрепить файл к модели:
@@ -78,3 +78,15 @@ $oSystemFileList = User::first()->getMedia();
 * `toCollection(string $sCollection)` - указать коллекцию (по умолчанию `default`);
 * `toDir(string $sDir)` - указать папку для хранения (по умолчанию `default`);
 * `put()` - сохранить файл.
+
+## Список консольных команд
+
+#### Очистка файлов системы
+
+ Название | Тип | Описание
+:-------|:-------|:-------
+dirs | string | Массив папок для отслеживания, передаются через запятую
+
+```bash
+php artisan system-file:clear <dirs>
+```
