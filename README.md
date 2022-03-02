@@ -14,7 +14,7 @@ composer require falbar/laravel-system-file
 php artisan migrate
 ```
 
-## Пример использования
+## Подключение
 
 Для подключения пакета к модели, необходимо добавить трейт `InteractsMedia`:
 
@@ -26,6 +26,29 @@ class User extends Model
 {
     use InteractsMedia;
 }
+```
+
+## Примеры использования
+
+1. Загрузить изображение:
+
+```php
+User::first()
+    ->addMedia('https://falbar.ru/storage/avatars/user1-afresipiv.png')
+    ->setFileName('user1')
+    ->put();
+```
+
+2. Получить первое изображение:
+
+```php
+$oSystemFile = User::first()->getMediaFirst();
+```
+
+3. Получить список изображений:
+
+```php
+$oSystemFileList = User::first()->getMedia();
 ```
 
 ## Список методов/свойств
