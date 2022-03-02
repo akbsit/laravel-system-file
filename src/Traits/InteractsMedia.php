@@ -1,7 +1,7 @@
 <?php namespace Falbar\SystemFile\Traits;
 
+use Falbar\SystemFile\SystemFile as Media;
 use Falbar\SystemFile\Models\SystemFile;
-use Falbar\SystemFile as Media;
 
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use Illuminate\Http\UploadedFile;

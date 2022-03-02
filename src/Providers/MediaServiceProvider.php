@@ -23,7 +23,7 @@ class MediaServiceProvider extends ServiceProvider
     /* @return void */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         SystemFile::observe(SystemFileObserver::class);
     }

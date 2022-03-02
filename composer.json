@@ -23,7 +23,9 @@
     },
     "extra": {
         "laravel": {
-            "providers": "Falbar\\SystemFile\\Providers\\MediaServiceProvider"
+            "providers": [
+                "Falbar\\SystemFile\\Providers\\MediaServiceProvider"
+            ]
         }
     }
 }
