@@ -12,14 +12,15 @@
     ],
     "homepage": "http://falbar.ru/",
     "license": "MIT",
-    "type": "project",
+    "require": {
+        "php": "^7.4",
+        "ext-fileinfo": "*",
+        "laravel/framework": "^7.0"
+    },
     "autoload": {
         "psr-4": {
             "Falbar\\SystemFile\\": "src"
         }
-    },
-    "require": {
-        "php": "^7.4"
     },
     "extra": {
         "laravel": {
