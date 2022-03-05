@@ -17,12 +17,16 @@ use League\Flysystem\FileNotFoundException;
  */
 class File extends AbstractFile
 {
-    /* @return SystemFileModel|null */
+    /* @inheritDoc */
     public function put(): ?SystemFileModel
     {
-        $oResult = null;
         if (empty($this->file) || empty($this->oModel)) {
-            return $oResult;
+            return null;
+        }
+
+        $sFileName = $this->generateFileName();
+        if (empty($sFileName)) {
+            return null;
         }
 
         $sUniqid = Arr::get($this->arFileData, 'uniqid');
@@ -35,9 +39,9 @@ class File extends AbstractFile
 
         $oStorage = Storage::disk($sDisk);
 
-        $sPath = $oStorage->putFileAs($sSavePath, $this->file, $this->sFileName);
+        $sPath = $oStorage->putFileAs($sSavePath, $this->file, $sFileName);
         if (empty($sPath)) {
-            return $oResult;
+            return null;
         }
 
         $iSort = (int)SystemFileModel::max('sort');
@@ -48,11 +52,11 @@ class File extends AbstractFile
             $iSize = $oStorage->getSize($sPath);
         } catch (FileNotFoundException $oException) {
             $oStorage->delete($sPath);
-            return $oResult;
+
+            return null;
         }
 
-        /* @var SystemFileModel $oSystemFile */
-        $oSystemFile = SystemFileModel::create([
+        $arParamList = [
             'uniqid'       => $sUniqid,
             'is_partition' => $this->bIsPartition,
             'sort'         => $iSort,
@@ -63,14 +67,19 @@ class File extends AbstractFile
             'dir'          => $this->sDir,
             'mime_type'    => $sMimeType,
             'origin_name'  => $this->sOriginFileName,
-            'file_name'    => $this->sFileName,
+            'file_name'    => $sFileName,
             'file_size'    => $iSize,
             'properties'   => $this->arProperties,
-        ]);
+        ];
+
+        $oSystemFile = SystemFileModel::create($arParamList);
         if (empty($oSystemFile)) {
             $oStorage->delete($sPath);
-            return $oResult;
+
+            return null;
         }
+
+        $this->syncSingleFile($oSystemFile);
 
         return $oSystemFile;
     }
@@ -173,6 +182,14 @@ class File extends AbstractFile
     public function enablePartition(): self
     {
         $this->bIsPartition = true;
+
+        return $this;
+    }
+
+    /* @return File */
+    public function single(): self
+    {
+        $this->bIsSingle = true;
 
         return $this;
     }

@@ -39,13 +39,23 @@ User::first()
     ->put();
 ```
 
-2. Получить первое изображение:
+2. Прикрепить к модели один файл (при повторной загрузке старый перезапишется):
+
+```php
+User::first()
+    ->addMedia('https://falbar.ru/storage/avatars/user1-afresipiv.png')
+    ->setFileName('user1')
+    ->single()
+    ->put();
+```
+
+3. Получить первое изображение:
 
 ```php
 $oSystemFile = User::first()->getMediaFirst();
 ```
 
-3. Получить список изображений:
+4. Получить список изображений:
 
 ```php
 $oSystemFileList = User::first()->getMedia();
@@ -72,6 +82,7 @@ $oSystemFileList = User::first()->getMedia();
 * `setFile($file)` - установить объект/ссылку на файл;
 * `setModel(Model $oModel)` - установить модель;
 * `enablePartition()` - включить генерацию папок (пример: `73c/d53/dce`);
+* `single()` - добавлять к модели один файл (все остальные удаляться, если были ранее прикреплены);
 * `setOriginFileName(string $sOriginFileName)` - указать имя файла;
 * `setFileName(string $sFileName)` - указать название файла;
 * `setProperties(array $arProperties)` - задать свойства для файла;
