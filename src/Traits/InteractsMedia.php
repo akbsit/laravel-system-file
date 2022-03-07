@@ -34,6 +34,18 @@ trait InteractsMedia
     /**
      * @param string $sCollection
      *
+     * @return bool
+     */
+    public function mediaExists(string $sCollection = SystemFile::COLLECTION_DEFAULT): bool
+    {
+        return $this->media()
+            ->where('collection', $sCollection)
+            ->exists();
+    }
+
+    /**
+     * @param string $sCollection
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getMedia(string $sCollection = SystemFile::COLLECTION_DEFAULT)

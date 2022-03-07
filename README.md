@@ -66,6 +66,7 @@ $oSystemFileList = User::first()->getMedia();
 * `media` - список файлов прикрепленных к модели;
 * `addMedia($file)` - прикрепить файл к модели:
     * `$file` - объект/ссылка загружаемого файла.
+* `mediaExists(string $sCollection)` - проверить наличие прикрепленных файлов (по умолчанию `default`);
 * `getMedia(string $sCollection)` - список файлов коллекции (по умолчанию `default`);
 * `getMediaFirst(string $sCollection)` - первый элемент коллекции (по умолчанию `default`).
 
