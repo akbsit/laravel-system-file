@@ -19,7 +19,7 @@ php artisan migrate
 Для подключения пакета к модели, необходимо добавить трейт `InteractsMedia`:
 
 ```php
-use App\Classes\Service\SystemFile\Traits\InteractsMedia;
+use Falbar\SystemFile\Traits\InteractsMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
