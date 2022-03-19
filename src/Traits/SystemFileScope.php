@@ -6,16 +6,29 @@ use Falbar\SystemFile\Models\SystemFile;
  * Trait SystemFileScope
  * @package Falbar\SystemFile\Traits
  *
+ * @method static $this getByUniqID(string $sUniqID)
  * @method static $this getByFileName(string $sFileName)
  * @method static $this getByDiskName(string $sDiskName)
  * @method static $this getByCollection(string $sCollection)
  * @method static $this getByDir(string $sDir)
  * @method static $this getByExceptID(int $iID)
  * @method static $this getByModel(string $sModelType, int $iModelID)
+ * @method static $this getByUniqFile(string $sUniqID, string $sFileName)
  * @method static $this getByIsNotPartition()
  */
 trait SystemFileScope
 {
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder|SystemFile $oQuery
+     * @param string                                           $sUniqID
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetByUniqID($oQuery, string $sUniqID)
+    {
+        return $oQuery->where('uniqid', $sUniqID);
+    }
+
     /**
      * @param \Illuminate\Database\Eloquent\Builder|SystemFile $oQuery
      * @param string                                           $sFileName
@@ -83,6 +96,20 @@ trait SystemFileScope
         return $oQuery
             ->where('model_type', $sModelType)
             ->where('model_id', $iModelID);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder|SystemFile $oQuery
+     * @param string                                           $sUniqID
+     * @param string                                           $sFileName
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|SystemFile
+     */
+    public function scopeGetByUniqFile($oQuery, string $sUniqID, string $sFileName)
+    {
+        return $oQuery
+            ->getByUniqID($sUniqID)
+            ->getByFileName($sFileName);
     }
 
     /**
