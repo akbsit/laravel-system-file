@@ -1,12 +1,12 @@
 <?php namespace Falbar\SystemFile;
 
 use Falbar\SystemFile\Models\SystemFile as SystemFileModel;
+use Falbar\SystemFile\Helper\CollectionHelper;
 use Falbar\SystemFile\Helper\MediaHelper;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Arr;
 
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use League\Flysystem\FileNotFoundException;
@@ -20,7 +20,7 @@ class File extends AbstractFile
     /* @inheritDoc */
     public function put(): ?SystemFileModel
     {
-        if (empty($this->file) || empty($this->oModel)) {
+        if (empty($this->file) || empty($this->oModel) || !$this->availableDisk()) {
             return null;
         }
 
@@ -29,15 +29,14 @@ class File extends AbstractFile
             return null;
         }
 
-        $sUniqid = Arr::get($this->arFileData, 'uniqid');
-        $sDisk = Arr::get($this->arFileData, 'disk');
+        $sUniqid = CollectionHelper::get($this->arFileData, 'uniqid');
 
         $sSavePath = $this->sDir;
         if ($this->bIsPartition) {
             $sSavePath .= '/' . MediaHelper::getPartitionDirs($sUniqid);
         }
 
-        $oStorage = Storage::disk($sDisk);
+        $oStorage = Storage::disk($this->sDisk);
 
         $sPath = $oStorage->putFileAs($sSavePath, $this->file, $sFileName);
         if (empty($sPath)) {
@@ -62,7 +61,7 @@ class File extends AbstractFile
             'sort'         => $iSort,
             'model_type'   => get_class($this->oModel),
             'model_id'     => $this->oModel->getAttribute('id'),
-            'disk_name'    => $sDisk,
+            'disk_name'    => $this->sDisk,
             'collection'   => $this->sCollection,
             'dir'          => $this->sDir,
             'mime_type'    => $sMimeType,
@@ -150,6 +149,18 @@ class File extends AbstractFile
     public function setProperties(?array $arProperties): self
     {
         $this->arProperties = $arProperties;
+
+        return $this;
+    }
+
+    /**
+     * @param string $sDisk
+     *
+     * @return File
+     */
+    public function toDisk(string $sDisk): self
+    {
+        $this->sDisk = $sDisk;
 
         return $this;
     }

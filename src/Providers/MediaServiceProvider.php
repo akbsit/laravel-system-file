@@ -1,7 +1,7 @@
 <?php namespace Falbar\SystemFile\Providers;
 
 use Falbar\SystemFile\Observers\SystemFileObserver;
-use Falbar\SystemFile\Console\SystemFileClear;
+use Falbar\SystemFile\Console\SystemFileSync;
 use Falbar\SystemFile\Models\SystemFile;
 
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +16,7 @@ class MediaServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->commands([
-            SystemFileClear::class,
+            SystemFileSync::class,
         ]);
     }
 

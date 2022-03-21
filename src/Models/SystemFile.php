@@ -1,11 +1,11 @@
 <?php namespace Falbar\SystemFile\Models;
 
 use Falbar\SystemFile\Traits\SystemFileScope as SystemFileModel;
+use Falbar\SystemFile\Helper\CollectionHelper;
 use Falbar\SystemFile\Helper\MediaHelper;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Arr;
 
 /**
  * Class SystemFile
@@ -107,7 +107,7 @@ class SystemFile extends Model
             return null;
         }
 
-        return Arr::get($arData, 'width');
+        return CollectionHelper::get($arData, 'width');
     }
 
     /* @return int|null */
@@ -118,7 +118,7 @@ class SystemFile extends Model
             return null;
         }
 
-        return Arr::get($arData, 'height');
+        return CollectionHelper::get($arData, 'height');
     }
 
     /**

@@ -1,12 +1,14 @@
 <?php namespace Falbar\SystemFile;
 
+use Falbar\SystemFile\Models\SystemFile as SystemFileModel;
+use Falbar\SystemFile\Helper\CollectionHelper;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
-use Falbar\SystemFile\Models\SystemFile as SystemFileModel;
+use DusanKasan\Knapsack\Collection;
 use Exception;
 
 /**
@@ -35,6 +37,9 @@ abstract class AbstractFile
     protected $arProperties;
 
     /* @var string */
+    protected $sDisk;
+
+    /* @var string */
     protected $sCollection;
 
     /* @var string */
@@ -55,9 +60,9 @@ abstract class AbstractFile
     /* @return void */
     protected function initFileData(): void
     {
-        Arr::set($this->arFileData, 'disk', self::DISK_PUBLIC);
-        Arr::set($this->arFileData, 'uniqid', uniqid(null, true));
+        $this->arFileData['uniqid'] = uniqid(null, true);
         $this->arProperties = null;
+        $this->sDisk = self::DISK_PUBLIC;
         $this->sCollection = SystemFileModel::COLLECTION_DEFAULT;
         $this->sDir = SystemFileModel::DIR_DEFAULT;
         $this->bIsPartition = false;
@@ -124,13 +129,35 @@ abstract class AbstractFile
             }
 
             $sFileName = implode('', [
-                Arr::first($arFileName),
+                CollectionHelper::first($arFileName),
                 ++$iCounter, '.',
-                Arr::last($arFileName),
+                CollectionHelper::last($arFileName),
             ]);
         }
 
         return $sFileName;
+    }
+
+    /* @return bool */
+    protected function availableDisk(): bool
+    {
+        $sDisk = $this->sDisk;
+        if (empty($sDisk)) {
+            return false;
+        }
+
+        $arDiskList = config('filesystems.disks');
+        if (empty($arDiskList) || !is_array($arDiskList)) {
+            return false;
+        }
+
+        return Collection::from($arDiskList)
+            ->filter(function ($arValue) {
+                $sDriver = CollectionHelper::get($arValue, 'driver');
+
+                return $sDriver === 'local';
+            })
+            ->has($sDisk);
     }
 
     /**

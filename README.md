@@ -87,18 +87,15 @@ $oSystemFileList = User::first()->getMedia();
 * `setOriginFileName(string $sOriginFileName)` - указать имя файла;
 * `setFileName(string $sFileName)` - указать название файла;
 * `setProperties(array $arProperties)` - задать свойства для файла;
+* `toDisk(string $sDisk)` - указать диск хранения (по умолчанию `public`);
 * `toCollection(string $sCollection)` - указать коллекцию (по умолчанию `default`);
 * `toDir(string $sDir)` - указать папку для хранения (по умолчанию `default`);
 * `put()` - сохранить файл.
 
 ## Список консольных команд
 
-#### Очистка файлов системы
-
- Название | Тип | Описание
-:-------|:-------|:-------
-dirs | string | Массив папок для отслеживания, передаются через запятую
+#### Синхронизация файлов
 
 ```bash
-php artisan system-file:clear <dirs>
+php artisan system-file:sync
 ```
