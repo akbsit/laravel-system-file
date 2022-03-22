@@ -14,6 +14,8 @@ use Falbar\SystemFile\Models\SystemFile;
  * @method static $this getByExceptID(int $iID)
  * @method static $this getByModel(string $sModelType, int $iModelID)
  * @method static $this getByUniqFile(string $sUniqID, string $sFileName)
+ * @method static $this getByPartition(string $sPartition)
+ * @method static $this getByIsPartition()
  * @method static $this getByIsNotPartition()
  */
 trait SystemFileScope
@@ -110,6 +112,27 @@ trait SystemFileScope
         return $oQuery
             ->getByUniqID($sUniqID)
             ->getByFileName($sFileName);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder|SystemFile $oQuery
+     * @param string                                           $sPartition
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetByPartition($oQuery, string $sPartition)
+    {
+        return $oQuery->where('uniqid', 'like', $sPartition . '%');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder|SystemFile $oQuery
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetByIsPartition($oQuery)
+    {
+        return $oQuery->where('is_partition', true);
     }
 
     /**
