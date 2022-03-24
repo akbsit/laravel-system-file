@@ -76,7 +76,8 @@ $oSystemFileList = User::first()->getMedia();
 * `getPath()` - путь до файла;
 * `getWidthAndHeight()` - получить размеры файла (для картинок);
 * `getWidth()` - получить ширину (для картинок);
-* `getHeight()` - получить высоту (для картинок).
+* `getHeight()` - получить высоту (для картинок);
+* `fileExists()` - проверить наличие файл физически.
 
 #### addMedia
 

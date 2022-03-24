@@ -19,8 +19,12 @@ abstract class AbstractSystemFileSync extends Command
     protected array $arDiskList = [];
     protected array $arDirectoryList = [];
 
-    private int $iDeletedFileCount = 0;
-    private int $iDeletedDirectoryCount = 0;
+    protected int $iFileStorageCount = 0;
+    protected int $iFileDataBaseCount = 0;
+
+    private int $iDeletedFileStorageCount = 0;
+    private int $iDeletedDirectoryStorageCount = 0;
+    private int $iDeletedFileDataBaseCount = 0;
 
     /* @return void */
     protected function syncSystemFileFromStorage(): void
@@ -45,17 +49,39 @@ abstract class AbstractSystemFileSync extends Command
             $this->walkDiskFromStorage($sDisk);
         }
 
-        if ($this->iDeletedFileCount) {
+        if ($this->iDeletedFileStorageCount) {
             $this->output->newLine();
-            $this->warn('Deleted files count: ' . $this->iDeletedFileCount);
+            $this->warn('Deleted files count: ' . $this->iDeletedFileStorageCount);
         }
 
-        if ($this->iDeletedDirectoryCount) {
-            if (!$this->iDeletedFileCount) {
+        if ($this->iDeletedDirectoryStorageCount) {
+            if (!$this->iDeletedFileStorageCount) {
                 $this->output->newLine();
             }
 
-            $this->warn('Deleted empty directories count: ' . $this->iDeletedDirectoryCount);
+            $this->warn('Deleted empty directories count: ' . $this->iDeletedDirectoryStorageCount);
+        }
+    }
+
+    /* @return void */
+    protected function syncSystemFileFromDataBase(): void
+    {
+        $this->output->newLine();
+        $this->info('Start walk database:');
+
+        $this->iFileDataBaseCount = SystemFile::count();
+        $this->info('- item count: ' . $this->iFileDataBaseCount);
+
+        if ($this->iFileStorageCount === $this->iFileDataBaseCount) {
+            return;
+        }
+
+        SystemFile::all()
+            ->each($this->walkFileListFromDataBase());
+
+        if ($this->iDeletedFileDataBaseCount) {
+            $this->output->newLine();
+            $this->warn('Deleted files count: ' . $this->iDeletedFileDataBaseCount);
         }
     }
 
@@ -94,7 +120,7 @@ abstract class AbstractSystemFileSync extends Command
      */
     private function walkDirectoryFromStorage(string $sDisk, FilesystemAdapter $oStorage): Closure
     {
-        return function ($sDirectory, $iKey) use ($sDisk, $oStorage) {
+        return function (string $sDirectory, int $iKey) use ($sDisk, $oStorage) {
             $this->handleFileListFromStorage($sDirectory, $iKey, $sDisk, $oStorage);
             $this->handleEmptyDirectoryListFromStorage($sDirectory, $oStorage);
         };
@@ -145,7 +171,6 @@ abstract class AbstractSystemFileSync extends Command
         $arDirectoryList = $oStorage->allDirectories($sDirectory);
         $iDirectoryListCount = count($arDirectoryList);
 
-        $this->output->newLine();
         $this->info('-- directories count found: ' . $iDirectoryListCount);
 
         if ($iDirectoryListCount) {
@@ -159,7 +184,7 @@ abstract class AbstractSystemFileSync extends Command
         }
 
         $oStorage->deleteDirectory($sDirectory);
-        $this->iDeletedDirectoryCount++;
+        $this->iDeletedDirectoryStorageCount++;
     }
 
     /**
@@ -171,16 +196,16 @@ abstract class AbstractSystemFileSync extends Command
      */
     private function walkFileListFromStorage(string $sDisk, FilesystemAdapter $oStorage, string $sDirectory): Closure
     {
-        return function ($sFileItem) use ($sDisk, $oStorage, $sDirectory) {
-            $this->output->newLine();
-            $this->info('--- file: ' . $sFileItem);
-
+        return function (string $sFileItem) use ($sDisk, $oStorage, $sDirectory) {
             $oSystemFile = SystemFile::getByDiskName($sDisk)
                 ->getByDir($sDirectory)
                 ->getByFileName(basename($sFileItem));
 
             $sFullDirectory = dirname($sFileItem);
-            if ($sFullDirectory !== $sDirectory) {
+            if ($sFullDirectory === $sDirectory) {
+                $oSystemFile = $oSystemFile
+                    ->getByIsNotPartition();
+            } else {
                 $sPartition = ltrim($sFullDirectory, $sDirectory);
                 $sPartition = str_replace('/', '', $sPartition);
 
@@ -192,16 +217,15 @@ abstract class AbstractSystemFileSync extends Command
             $oSystemFile = $oSystemFile
                 ->first();
             if (!empty($oSystemFile)) {
-                $this->info('--- database: id=' . $oSystemFile->id);
-                $this->info('--- check: valid');
+                $this->iFileStorageCount++;
 
                 return;
             }
 
             $oStorage->delete($sFileItem);
 
-            $this->warn('--- check: deleted (not found in database)');
-            $this->iDeletedFileCount++;
+            $this->warn('--- check: deleted (file ' . $sFileItem . ' not exists in database)');
+            $this->iDeletedFileStorageCount++;
         };
     }
 
@@ -212,7 +236,7 @@ abstract class AbstractSystemFileSync extends Command
      */
     private function walkEmptyDirectoryListFromStorage(FilesystemAdapter $oStorage): Closure
     {
-        return function ($sDirectoryItem) use ($oStorage) {
+        return function (string $sDirectoryItem) use ($oStorage) {
             $arFileList = $oStorage->allFiles($sDirectoryItem);
             if (count($arFileList)) {
                 return;
@@ -221,7 +245,22 @@ abstract class AbstractSystemFileSync extends Command
             $oStorage->deleteDirectory($sDirectoryItem);
 
             $this->warn('--- check: deleted (empty ' . $sDirectoryItem . ' directory)');
-            $this->iDeletedDirectoryCount++;
+            $this->iDeletedDirectoryStorageCount++;
+        };
+    }
+
+    /* @return Closure */
+    private function walkFileListFromDataBase(): Closure
+    {
+        return function (SystemFile $oSystemFile) {
+            if ($oSystemFile->fileExists()) {
+                return true;
+            }
+
+            $oSystemFile->delete();
+
+            $this->warn('-- check: deleted (id=' . $oSystemFile->id . ' not exists file in storage)');
+            $this->iDeletedFileDataBaseCount++;
         };
     }
 }

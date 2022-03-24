@@ -121,6 +121,13 @@ class SystemFile extends Model
         return CollectionHelper::get($arData, 'height');
     }
 
+    /* @return bool */
+    public function fileExists(): bool
+    {
+        return Storage::disk($this->disk_name)
+            ->exists(MediaHelper::getStorageFilePath($this));
+    }
+
     /**
      * @param string $sValue
      *

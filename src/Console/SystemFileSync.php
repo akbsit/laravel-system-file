@@ -26,9 +26,27 @@ class SystemFileSync extends AbstractSystemFileSync
         $this->info('Current date: ' . Carbon::now());
 
         $this->syncSystemFileFromStorage();
+        $this->syncSystemFileFromDataBase();
 
-        $this->output->newLine(2);
+        $this->completedMessage();
 
         $this->info('Stop handle');
+    }
+
+    /* @return void */
+    private function completedMessage(): void
+    {
+        $this->output->newLine();
+
+        if ($this->iFileStorageCount === $this->iFileDataBaseCount) {
+            $sMessage = 'File count in storage: ' . $this->iFileStorageCount . PHP_EOL;
+            $sMessage .= 'File count in database: ' . $this->iFileDataBaseCount;
+
+            $this->output->success($sMessage);
+        } else {
+            $this->output->warning('Syncing completed');
+        }
+
+        $this->output->newLine(2);
     }
 }
