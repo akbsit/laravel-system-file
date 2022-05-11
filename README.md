@@ -1,22 +1,22 @@
 # laravel-system-file, [Packagist](https://packagist.org/packages/falbar/laravel-system-file)
 
-## Установка
+## Install
 
-Для установки пакета нужно:
+To install package, you need run command:
 
 ```bash
 composer require falbar/laravel-system-file
 ```
 
-Далее установить миграции:
+Next install migrations:
 
 ```bash
 php artisan migrate
 ```
 
-## Подключение
+## Usage
 
-Для подключения пакета к модели, необходимо добавить трейт `InteractsMedia`:
+To connect package to the model, you need to add a trait `InteractsMedia`:
 
 ```php
 use Falbar\SystemFile\Traits\InteractsMedia;
@@ -28,9 +28,9 @@ class User extends Model
 }
 ```
 
-## Примеры использования
+## Examples
 
-1. Загрузить изображение:
+1. Upload image:
 
 ```php
 User::first()
@@ -39,7 +39,7 @@ User::first()
     ->put();
 ```
 
-2. Прикрепить к модели один файл (при повторной загрузке старый перезапишется):
+2. Attach one file to the model (the old one will be overwritten when re-uploading):
 
 ```php
 User::first()
@@ -49,53 +49,53 @@ User::first()
     ->put();
 ```
 
-3. Получить первое изображение:
+3. Get first image:
 
 ```php
 $oSystemFile = User::first()->getMediaFirst();
 ```
 
-4. Получить список изображений:
+4. Get images list:
 
 ```php
 $oSystemFileList = User::first()->getMedia();
 ```
 
-## Список методов и свойств
+## Methods and properties
 
-* `media` - список файлов прикрепленных к модели;
-* `addMedia($file)` - прикрепить файл к модели:
-    * `$file` - объект/ссылка загружаемого файла.
-* `mediaExists(string $sCollection)` - проверить наличие прикрепленных файлов (по умолчанию `default`);
-* `getMedia(string $sCollection)` - список файлов коллекции (по умолчанию `default`);
-* `getMediaFirst(string $sCollection)` - первый элемент коллекции (по умолчанию `default`).
+* `media` - list of files attached to the model;
+* `addMedia($file)` - attach file to the model:
+    * `$file` - object/link of the uploaded file.
+* `mediaExists(string $sCollection)` - check for attached files (by default `default`);
+* `getMedia(string $sCollection)` - list of collection files (by default `default`);
+* `getMediaFirst(string $sCollection)` - first element of the collection (by default `default`).
 
 #### media
 
-* `getUrl()` - абсолютный путь файла;
-* `getPath()` - путь до файла;
-* `getWidthAndHeight()` - получить размеры файла (для картинок);
-* `getWidth()` - получить ширину (для картинок);
-* `getHeight()` - получить высоту (для картинок);
-* `fileExists()` - проверить наличие файл физически.
+* `getUrl()` - absolute file path;
+* `getPath()` - path to the file;
+* `getWidthAndHeight()` - get file sizes (for images);
+* `getWidth()` - get width (for images);
+* `getHeight()` - get height (for pictures);
+* `fileExists()` - check for the presence of the file physically.
 
 #### addMedia
 
-* `setFile($file)` - установить объект/ссылку на файл;
-* `setModel(Model $oModel)` - установить модель;
-* `enablePartition()` - включить генерацию папок (пример: `73c/d53/dce`);
-* `single()` - добавлять к модели один файл (все остальные удаляться, если были ранее прикреплены);
-* `setOriginFileName(string $sOriginFileName)` - указать имя файла;
-* `setFileName(string $sFileName)` - указать название файла;
-* `setProperties(array $arProperties)` - задать свойства для файла;
-* `toDisk(string $sDisk)` - указать диск хранения (по умолчанию `public`);
-* `toCollection(string $sCollection)` - указать коллекцию (по умолчанию `default`);
-* `toDir(string $sDir)` - указать папку для хранения (по умолчанию `default`);
-* `put()` - сохранить файл.
+* `setFile($file)` - set object/link to a file;
+* `setModel(Model $oModel)` - set model;
+* `enablePartition()` - enable folder generation (example: `73c/d53/dce`);
+* `single()` - add one file to the model (all others are deleted if they were previously attached);
+* `setOriginFileName(string $sOriginFileName)` - set origin file name;
+* `setFileName(string $sFileName)` - set file name;
+* `setProperties(array $arProperties)` - set file properties;
+* `toDisk(string $sDisk)` - set storage disk (by default `public`);
+* `toCollection(string $sCollection)` - set collection (by default `default`);
+* `toDir(string $sDir)` - set storage folder (by default `default`);
+* `put()` - save file.
 
-## Список консольных команд
+## Console commands
 
-#### Синхронизация файлов
+#### File synchronization
 
 ```bash
 php artisan system-file:sync
