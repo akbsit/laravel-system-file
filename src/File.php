@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
-use League\Flysystem\FileNotFoundException;
 
 /**
  * Class File
@@ -46,15 +45,6 @@ class File extends AbstractFile
         $iSort = (int)SystemFileModel::max('sort');
         $iSort++;
 
-        try {
-            $sMimeType = $oStorage->getMimetype($sPath);
-            $iSize = $oStorage->getSize($sPath);
-        } catch (FileNotFoundException $oException) {
-            $oStorage->delete($sPath);
-
-            return null;
-        }
-
         $arParamList = [
             'uniqid'       => $sUniqid,
             'is_partition' => $this->bIsPartition,
@@ -64,10 +54,10 @@ class File extends AbstractFile
             'disk_name'    => $this->sDisk,
             'collection'   => $this->sCollection,
             'dir'          => $this->sDir,
-            'mime_type'    => $sMimeType,
+            'mime_type'    => $oStorage->mimeType($sPath),
             'origin_name'  => $this->sOriginFileName,
             'file_name'    => $sFileName,
-            'file_size'    => $iSize,
+            'file_size'    => $oStorage->size($sPath),
             'properties'   => $this->arProperties,
         ];
 
