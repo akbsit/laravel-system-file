@@ -1,10 +1,10 @@
-<?php namespace Falbar\SystemFile\Helper;
+<?php namespace Akbsit\SystemFile\Helper;
 
-use Falbar\SystemFile\Models\SystemFile;
+use Akbsit\SystemFile\Models\SystemFile;
 
 /**
  * Class MediaHelper
- * @package Falbar\SystemFile\Helper
+ * @package Akbsit\SystemFile\Helper
  */
 class MediaHelper
 {

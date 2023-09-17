@@ -1,4 +1,4 @@
-<?php namespace Falbar\SystemFile;
+<?php namespace Akbsit\SystemFile;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 /**
  * Class SystemFile
- * @package Falbar\SystemFile
+ * @package Akbsit\SystemFile
  */
 class SystemFile
 {

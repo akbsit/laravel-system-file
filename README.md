@@ -1,11 +1,11 @@
-# laravel-system-file, [Packagist](https://packagist.org/packages/falbar/laravel-system-file)
+# laravel-system-file, [Packagist](https://packagist.org/packages/akbsit/laravel-system-file)
 
 ## Install
 
 To install package, you need run command:
 
 ```bash
-composer require falbar/laravel-system-file
+composer require akbsit/laravel-system-file
 ```
 
 Next install migrations:
@@ -19,7 +19,7 @@ php artisan migrate
 To connect package to the model, you need to add a trait `InteractsMedia`:
 
 ```php
-use Falbar\SystemFile\Traits\InteractsMedia;
+use Akbsit\SystemFile\Traits\InteractsMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -34,7 +34,7 @@ class User extends Model
 
 ```php
 User::first()
-    ->addMedia('https://falbar.ru/storage/avatars/user1-afresipiv.png')
+    ->addMedia('<file_url>')
     ->setFileName('user1')
     ->put();
 ```
@@ -43,7 +43,7 @@ User::first()
 
 ```php
 User::first()
-    ->addMedia('https://falbar.ru/storage/avatars/user1-afresipiv.png')
+    ->addMedia('<file_url>')
     ->setFileName('user1')
     ->single()
     ->put();

@@ -1,15 +1,15 @@
-<?php namespace Falbar\SystemFile\Models;
+<?php namespace Akbsit\SystemFile\Models;
 
-use Falbar\SystemFile\Traits\SystemFileScope as SystemFileModel;
-use Falbar\SystemFile\Helper\CollectionHelper;
-use Falbar\SystemFile\Helper\MediaHelper;
+use Akbsit\SystemFile\Traits\SystemFileScope as SystemFileModel;
+use Akbsit\SystemFile\Helper\CollectionHelper;
+use Akbsit\SystemFile\Helper\MediaHelper;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 /**
  * Class SystemFile
- * @package Falbar\SystemFile\Models
+ * @package Akbsit\SystemFile\Models
  *
  * @mixin \Illuminate\Database\Eloquent\Model
  * @mixin \Illuminate\Database\Eloquent\Builder

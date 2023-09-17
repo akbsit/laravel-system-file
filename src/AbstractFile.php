@@ -1,7 +1,7 @@
-<?php namespace Falbar\SystemFile;
+<?php namespace Akbsit\SystemFile;
 
-use Falbar\SystemFile\Models\SystemFile as SystemFileModel;
-use Falbar\SystemFile\Helper\CollectionHelper;
+use Akbsit\SystemFile\Models\SystemFile as SystemFileModel;
+use Akbsit\SystemFile\Helper\CollectionHelper;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -13,7 +13,7 @@ use Exception;
 
 /**
  * Class AbstractFile
- * @package Falbar\SystemFile
+ * @package Akbsit\SystemFile
  */
 abstract class AbstractFile
 {

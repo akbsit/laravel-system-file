@@ -1,5 +1,5 @@
 {
-    "name": "falbar/laravel-system-file",
+    "name": "akbsit/laravel-system-file",
     "description": "Uploading files to the server.",
     "keywords": [
         "laravel",
@@ -10,7 +10,6 @@
         "cms",
         "upload"
     ],
-    "homepage": "http://falbar.ru/",
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -20,13 +19,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Falbar\\SystemFile\\": "src"
+            "Akbsit\\SystemFile\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Falbar\\SystemFile\\Providers\\MediaServiceProvider"
+                "Akbsit\\SystemFile\\Providers\\MediaServiceProvider"
             ]
         }
     }

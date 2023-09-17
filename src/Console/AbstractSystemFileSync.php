@@ -1,7 +1,7 @@
-<?php namespace Falbar\SystemFile\Console;
+<?php namespace Akbsit\SystemFile\Console;
 
-use Falbar\SystemFile\Helper\ModelHelper;
-use Falbar\SystemFile\Models\SystemFile;
+use Akbsit\SystemFile\Helper\ModelHelper;
+use Akbsit\SystemFile\Models\SystemFile;
 
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +12,7 @@ use Closure;
 
 /**
  * Class AbstractSystemFileSync
- * @package Falbar\SystemFile\Console
+ * @package Akbsit\SystemFile\Console
  */
 abstract class AbstractSystemFileSync extends Command
 {

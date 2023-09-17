@@ -1,10 +1,10 @@
-<?php namespace Falbar\SystemFile\Helper;
+<?php namespace Akbsit\SystemFile\Helper;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ValidatorHelper
- * @package Falbar\SystemFile\Helper
+ * @package Akbsit\SystemFile\Helper
  */
 class ValidatorHelper
 {

@@ -1,15 +1,15 @@
-<?php namespace Falbar\SystemFile\Observers;
+<?php namespace Akbsit\SystemFile\Observers;
 
-use Falbar\SystemFile\Helper\ValidatorHelper;
-use Falbar\SystemFile\Helper\MediaHelper;
-use Falbar\SystemFile\Models\SystemFile;
+use Akbsit\SystemFile\Helper\ValidatorHelper;
+use Akbsit\SystemFile\Helper\MediaHelper;
+use Akbsit\SystemFile\Models\SystemFile;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 /**
  * Class SystemFileObserver
- * @package Falbar\SystemFile\Observers
+ * @package Akbsit\SystemFile\Observers
  */
 class SystemFileObserver
 {

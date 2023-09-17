@@ -1,14 +1,14 @@
-<?php namespace Falbar\SystemFile\Traits;
+<?php namespace Akbsit\SystemFile\Traits;
 
-use Falbar\SystemFile\SystemFile as Media;
-use Falbar\SystemFile\Models\SystemFile;
+use Akbsit\SystemFile\SystemFile as Media;
+use Akbsit\SystemFile\Models\SystemFile;
 
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use Illuminate\Http\UploadedFile;
 
 /**
  * Trait InteractsMedia
- * @package Falbar\SystemFile\Traits
+ * @package Akbsit\SystemFile\Traits
  *
  * @property \Illuminate\Database\Eloquent\Collection|SystemFile $media
  */
@@ -23,7 +23,7 @@ trait InteractsMedia
     /**
      * @param UploadedFile|SymfonyFile|string $file
      *
-     * @return \Falbar\SystemFile\File
+     * @return \Akbsit\SystemFile\File
      */
     public function addMedia($file)
     {

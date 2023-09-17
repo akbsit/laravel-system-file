@@ -1,14 +1,14 @@
-<?php namespace Falbar\SystemFile\Providers;
+<?php namespace Akbsit\SystemFile\Providers;
 
-use Falbar\SystemFile\Observers\SystemFileObserver;
-use Falbar\SystemFile\Console\SystemFileSync;
-use Falbar\SystemFile\Models\SystemFile;
+use Akbsit\SystemFile\Observers\SystemFileObserver;
+use Akbsit\SystemFile\Console\SystemFileSync;
+use Akbsit\SystemFile\Models\SystemFile;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class MediaServiceProvider
- * @package Falbar\SystemFile\Providers
+ * @package Akbsit\SystemFile\Providers
  */
 class MediaServiceProvider extends ServiceProvider
 {

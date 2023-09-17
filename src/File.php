@@ -1,8 +1,8 @@
-<?php namespace Falbar\SystemFile;
+<?php namespace Akbsit\SystemFile;
 
-use Falbar\SystemFile\Models\SystemFile as SystemFileModel;
-use Falbar\SystemFile\Helper\CollectionHelper;
-use Falbar\SystemFile\Helper\MediaHelper;
+use Akbsit\SystemFile\Models\SystemFile as SystemFileModel;
+use Akbsit\SystemFile\Helper\CollectionHelper;
+use Akbsit\SystemFile\Helper\MediaHelper;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 
 /**
  * Class File
- * @package Falbar\SystemFile
+ * @package Akbsit\SystemFile
  */
 class File extends AbstractFile
 {

@@ -1,10 +1,10 @@
-<?php namespace Falbar\SystemFile\Console;
+<?php namespace Akbsit\SystemFile\Console;
 
 use Carbon\Carbon;
 
 /**
  * Class SystemFileSync
- * @package Falbar\SystemFile\Console
+ * @package Akbsit\SystemFile\Console
  */
 class SystemFileSync extends AbstractSystemFileSync
 {

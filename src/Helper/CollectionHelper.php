@@ -1,4 +1,4 @@
-<?php namespace Falbar\SystemFile\Helper;
+<?php namespace Akbsit\SystemFile\Helper;
 
 use function DusanKasan\Knapsack\getOrDefault;
 use function DusanKasan\Knapsack\first;
@@ -10,7 +10,7 @@ use Traversable;
 
 /**
  * Class CollectionHelper
- * @package Falbar\SystemFile\Helper
+ * @package Akbsit\SystemFile\Helper
  */
 class CollectionHelper
 {

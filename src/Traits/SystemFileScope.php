@@ -1,10 +1,10 @@
-<?php namespace Falbar\SystemFile\Traits;
+<?php namespace Akbsit\SystemFile\Traits;
 
-use Falbar\SystemFile\Models\SystemFile;
+use Akbsit\SystemFile\Models\SystemFile;
 
 /**
  * Trait SystemFileScope
- * @package Falbar\SystemFile\Traits
+ * @package Akbsit\SystemFile\Traits
  *
  * @method static $this getByUniqID(string $sUniqID)
  * @method static $this getByFileName(string $sFileName)
